@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<link rel="stylesheet" href="css/bootstrap.min.css">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <title>Radar chart</title>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>  
+    <script src="js/d3.v3.min.js"></script>
+	<script src="js/RadarChart.js"></script>
+	<style>
+		body {
+		  margin: 0;
+		  font-size: 14px;
+		  font-family: "Helvetica Neue", Helvetica;
+		  background-color:rgba(0,0,0,.1);
+		}
+
+		#chart {
+		  position: absolute;
+		  top: 50px;
+		  left: 100px;
+		}
+		.block{
+			background-color:white;
+			padding:10px;
+			margin: 10px; 
+		}	
+		h4{
+			font-weight: bold;
+		}
+	</style>
+  </head>
+  <body>
+        <div class="row">
+			<div class="col-md-8">
+				<div id="body">
+		 		<div id="chart"></div>
+		 		</div>
+		  	</div>
+		  	<div class="col-md-4">
+		  		<div class="col-md-12 block">
+		  		<h4>Show</h4>
+		  		<form id="show">
+		  		<div class="radio">
+				  <label><input type="radio" name="optradio" value="topic" checked>Topic</label>
+				</div>
+				<div class="radio">
+				  <label><input type="radio" name="optradio" value="sector">Sector</label>
+				</div>
+				<div class="radio ">
+				  <label><input type="radio" name="optradio" value="region">Region</label>
+				</div>
+				<div class="radio ">
+				  <label><input type="radio" name="optradio" value="pestle">Pestle</label>
+				</div>
+				<button onclick="return update_graph()">Submit</button>
+				</form> 
+				</div>
+				<div class="col-md-12 block">
+		  		<h4>Measure</h4>
+		  		<form id="measure">
+		  		 <div class="checkbox">
+				  <label><input type="checkbox" class="measure" value="intensity" checked>Intensity</label>
+				</div>
+				<div class="checkbox">
+				  <label><input type="checkbox"  class="measure" value="likelihood">Likelihood</label>
+				</div>
+				<div class="checkbox">
+				  <label><input type="checkbox" class="measure" value="relevance">Relevance</label>
+				</div>
+				<button onclick="return update_graph()">Submit</button> 
+				</form>
+				</div>
+				<div class="col-md-12 block">
+		  		<h4>Year Range</h4>
+		  		<form id="year">
+		  		 <div class="checkbox">
+				  <label><input type="checkbox" class="year" value="" checked>All</label>
+				</div>
+				<div class="checkbox">
+				  <label><input type="checkbox"  class="year" value="2015-2020">2015-2020</label>
+				</div>
+				<div class="checkbox">
+				  <label><input type="checkbox" class="year" value="2021-2030">2021-2030</label>
+				</div>
+				<div class="checkbox">
+				  <label><input type="checkbox" class="year" value="2031-2040">2031-2040</label>
+				</div>
+				<div class="checkbox">
+				  <label><input type="checkbox" class="year" value="2041-2050">2041-2050</label>
+				</div>
+				<div class="checkbox">
+				  <label><input type="checkbox" class="year" value="2051-9999">>2051</label>
+				</div>
+				<button onclick="return update_graph()">Submit</button> 
+				</form>
+				</div>
+		  	</div>
+	    </div>
+    <script type="text/javascript" src="js/script.js"></script>	
+    <script type="text/javascript" src="js/data.js"></script>	
+    <script type="text/javascript" >
+       	function update_graph(){
+       	var years=[];
+       	$.each($('.year:checkbox:checked'),function(){
+			years.push($(this).val());
+		});
+       	var measures=[];
+       	$.each($('.measure:checkbox:checked'),function(){
+			measures.push($(this).val());
+		});
+		console.log(measures);
+    	var show=$('input[name=optradio]:checked', '#show').val();
+    	graph(data,5,show,measures,years);
+    	return false;
+    	}
+       	graph(data,5,"topic",["intensity"],[""]);
+    </script>
+
+  </body>
+</html>
